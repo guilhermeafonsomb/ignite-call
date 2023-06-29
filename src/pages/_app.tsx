@@ -1,15 +1,8 @@
+import type { AppProps } from "next/app";
 import { globalStyles } from "../styles/global";
 
 globalStyles();
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <html lang="en">
-      <body>{children}</body>
-    </html>
-  );
+export default function App({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />;
 }
