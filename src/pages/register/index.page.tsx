@@ -2,7 +2,9 @@ import { Button, Heading, MultiStep, Text, TextInput } from "@ignite-ui/react";
 import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
 import { ArrowRight } from "phosphor-react";
+import { useEffect } from "react";
 import { z } from "zod";
 import * as S from "./styles";
 
@@ -25,10 +27,22 @@ export default function Register() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RgisterFormData>({
     resolver: zodResolver(registerFormSchema),
+    defaultValues: {
+      username: "guilhermeafonsomb",
+    },
   });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query.username) {
+      setValue("username", String(router.query.username));
+    }
+  }, [router.query?.username, setValue]);
 
   async function handleRegister(data: RgisterFormData) {
     console.log(data);
